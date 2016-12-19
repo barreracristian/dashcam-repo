@@ -3,5 +3,83 @@ html {
 }
 
 body {
-    padding-top: 50px;
+    padding-top: 80px;
+    background-color: #EEE;
+}
+
+.form-signin{
+    max-width: 330px;
+    padding: 15px;
+    margin: 0 auto;
+}
+
+.jumbotron{
+    background-color: white;
+}
+
+.search-form, .search-form .form-group, .search-form .form-group input{
+    width:100%;
+}
+
+.glyphicon.spinning {
+    animation: spin 1s infinite linear;
+    -webkit-animation: spin2 1s infinite linear;
+}
+
+@keyframes spin {
+    from { transform: scale(1) rotate(0deg); }
+    to { transform: scale(1) rotate(360deg); }
+}
+
+@-webkit-keyframes spin2 {
+    from { -webkit-transform: rotate(0deg); }
+    to { -webkit-transform: rotate(360deg); }
+}
+
+.loading{
+    width: 100%;
+    text-align: center;
+}
+
+.loading .glyphicon{
+    font-size: 40px;
+}
+
+.results{
+    background-color: white;
+    border-radius: 6px;
+}
+
+.result{
+    border-bottom: 1px solid #CCC;
+}
+
+.result:last-child{
+    border-bottom: none;
+}
+
+.result .wrapper{
+    margin:5px 0 5px 0;
+}
+
+.result .image{
+    width: 1px;
+}
+
+.result .detail .wrapper{
+    padding-left: 15px;
+}
+
+.result .status span{
+    margin:5px;
+    font-size:22px;
+    color:#CCC;
+}
+
+.result .actions .wrapper{
+    background-color: white;
+}
+
+.glyphicon.on{
+    color: #337AB7 !important;
 }

@@ -1,26 +1,96 @@
+<nav class="navbar navbar-inverse navbar-fixed-top">
+    <div class="container">
+        <div class="navbar-header">
+            <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#navbar"
+                    aria-expanded="false" aria-controls="navbar">
+                <span class="sr-only">Toggle navigation</span>
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+            </button>
+            <a class="navbar-brand" href="#">Dashcam Repo</a>
+        </div>
+        <div id="navbar" class="navbar-collapse collapse">
+
+        </div><!--/.navbar-collapse -->
+    </div>
+</nav>
+
 <div class="container">
-    <!-- Example row of columns -->
-    <div class="row">
-        <div class="col-md-4">
-            <h2>{{title}}</h2>
-            <p>Donec id elit non mi porta gravida at eget metus. Fusce dapibus, tellus ac cursus commodo, tortor mauris condimentum nibh, ut fermentum massa justo sit amet risus. Etiam porta sem malesuada magna mollis euismod. Donec sed odio dui. </p>
-            <p><a class="btn btn-default" href="#" role="button">View details »</a></p>
-        </div>
-        <div class="col-md-4">
-            <h2>{{title}}</h2>
-            <p>Donec id elit non mi porta gravida at eget metus. Fusce dapibus, tellus ac cursus commodo, tortor mauris condimentum nibh, ut fermentum massa justo sit amet risus. Etiam porta sem malesuada magna mollis euismod. Donec sed odio dui. </p>
-            <p><a class="btn btn-default" href="#" role="button">View details »</a></p>
-        </div>
-        <div class="col-md-4">
-            <h2>{{title}}</h2>
-            <p>Donec sed odio dui. Cras justo odio, dapibus ac facilisis in, egestas eget quam. Vestibulum id ligula porta felis euismod semper. Fusce dapibus, tellus ac cursus commodo, tortor mauris condimentum nibh, ut fermentum massa justo sit amet risus.</p>
-            <p><a class="btn btn-default" href="#" role="button">View details »</a></p>
+
+    <div class="jumbotron">
+        <div class="container-fluid">
+            <form class="search-form navbar-form navbar-left">
+                <div class="form-group">
+                    <input type="text" class="form-control input-lg" placeholder="Ingrese su busqueda">
+                </div>
+                <div class="form-group" style="margin-top:10px;">
+                    <label class="radio-inline">
+                        <input type="radio" name="inlineRadioOptions" id="inlineRadio1" value="siniestro" checked>
+                        Numero de siniestro
+                    </label>
+                    <label class="radio-inline">
+                        <input type="radio" name="inlineRadioOptions" id="inlineRadio2" value="rut"> RUT del asegurado
+                    </label>
+                    <label class="radio-inline">
+                        <input type="radio" name="inlineRadioOptions" id="inlineRadio3" value="patente"> Patente
+                    </label>
+
+                    <button type="submit" class="btn btn-lg btn-primary" ng-click="search()" style="float:right">
+                        Buscar
+                    </button>
+                </div>
+            </form>
         </div>
     </div>
+
+    <div class="loading" ng-if="searching">
+        <span class="glyphicon glyphicon-repeat spinning" aria-hidden="true"></span>
+    </div>
+
+    <div class="embed-responsive embed-responsive-16by9" ng-if="videoId">
+        <youtube-video video-id="videoId"></youtube-video>
+    </div>
+
+    <div class="results" ng-if="!searching">
+        <div class="container-fluid" style="padding:15px 15px 0 15px">
+
+            <table width="100%">
+                <tr class="result" ng-repeat="v in videos">
+                    <td class="image">
+                        <div class="wrapper">
+                            <img src="img/video-default.jpg" ng-click="selectVideo(v)" />
+                        </div>
+                    </td>
+                    <td class="detail">
+                        <div class="wrapper">
+                            <p><b>Siniestro:</b> #{{v.siniestroId}}</p>
+                            <p><b>Patente:</b> {{v.patente}}</p>
+                            <p><b>RUT Asegurado:</b> {{v.rut}}</p>
+                        </div>
+                    </td>
+                    <td class="status">
+                        <div class="wrapper">
+                            <span class="glyphicon glyphicon-cloud-upload" ng-class="{'on':v.uploaded}" aria-hidden="true"></span>
+                            <span class="glyphicon glyphicon-eye-open" ng-class="{'on':v.seen}" aria-hidden="true"></span>
+                            <span class="glyphicon glyphicon-cloud-download" ng-class="{'on':v.downloaded}" aria-hidden="true"></span>
+                        </div>
+                    </td>
+                    <td class="actions">
+                        <div class="wrapper">
+                            Descargar
+                        </div>
+                    </td>
+                </tr>
+            </table>
+
+        </div>
+    </div>
+
 
     <hr>
 
     <footer>
-        <p>© 2015 Company, Inc.</p>
+        <p>© 2016 Company, Inc.</p>
     </footer>
 </div>

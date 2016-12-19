@@ -3,8 +3,10 @@ var app = angular.module('dashcam-repo', [
     'angular.filter',
     'dashcam-repo.controllers.MainController',
     'dashcam-repo.controllers.HomeController',
+    'dashcam-repo.controllers.LoginController',
     'dashcam-repo.services.DBService',
-    'dashcam-repo.extras'
+    'dashcam-repo.extras',
+    'youtube-embed'
 ]);
 
 app.run(
@@ -17,6 +19,11 @@ app.run(
         $sceProvider.enabled(false);
 
         $stateProvider
+            .state('login', {
+                url: "/login",
+                templateUrl: 'templates/login.html',
+                controller: "LoginController"
+            })
             .state('home', {
                 url: "/home",
                 templateUrl: 'templates/home.html',
