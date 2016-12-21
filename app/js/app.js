@@ -31,6 +31,6 @@ app.run(
             })
         ;
 
-        $urlRouterProvider.otherwise("/home");
+        $urlRouterProvider.otherwise("/login");
     }
 );

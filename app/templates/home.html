@@ -1,18 +1,13 @@
 <nav class="navbar navbar-inverse navbar-fixed-top">
     <div class="container">
         <div class="navbar-header">
-            <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#navbar"
-                    aria-expanded="false" aria-controls="navbar">
-                <span class="sr-only">Toggle navigation</span>
-                <span class="icon-bar"></span>
-                <span class="icon-bar"></span>
-                <span class="icon-bar"></span>
-            </button>
             <a class="navbar-brand" href="#">Dashcam Repo</a>
         </div>
-        <div id="navbar" class="navbar-collapse collapse">
-
-        </div><!--/.navbar-collapse -->
+        <div class="navbar-right">
+            <button type="button" class="btn btn-primary navbar-btn">
+                <span class="glyphicon glyphicon-cloud-upload" aria-hidden="true" style="margin-right: 15px;"></span>Subir Video
+            </button>
+        </div>
     </div>
 </nav>
 
@@ -48,18 +43,14 @@
         <span class="glyphicon glyphicon-repeat spinning" aria-hidden="true"></span>
     </div>
 
-    <div class="embed-responsive embed-responsive-16by9" ng-if="videoId">
-        <youtube-video video-id="videoId"></youtube-video>
-    </div>
-
     <div class="results" ng-if="!searching">
-        <div class="container-fluid" style="padding:15px 15px 0 15px">
+        <div class="container-fluid" style="padding:10px 15px 10px 15px">
 
             <table width="100%">
                 <tr class="result" ng-repeat="v in videos">
                     <td class="image">
                         <div class="wrapper">
-                            <img src="img/video-default.jpg" ng-click="selectVideo(v)" />
+                            <img ng-src="https://i1.ytimg.com/vi/{{v.videoId}}/default.jpg" ng-click="selectVideo(v)"/>
                         </div>
                     </td>
                     <td class="detail">
@@ -71,14 +62,19 @@
                     </td>
                     <td class="status">
                         <div class="wrapper">
-                            <span class="glyphicon glyphicon-cloud-upload" ng-class="{'on':v.uploaded}" aria-hidden="true"></span>
-                            <span class="glyphicon glyphicon-eye-open" ng-class="{'on':v.seen}" aria-hidden="true"></span>
-                            <span class="glyphicon glyphicon-cloud-download" ng-class="{'on':v.downloaded}" aria-hidden="true"></span>
+                            <span class="glyphicon glyphicon-cloud-upload" ng-class="{'on':v.uploaded}"
+                                  aria-hidden="true"></span>
+                            <span class="glyphicon glyphicon-eye-open" ng-class="{'on':v.seen}"
+                                  aria-hidden="true"></span>
+                            <span class="glyphicon glyphicon-cloud-download" ng-class="{'on':v.downloaded}"
+                                  aria-hidden="true"></span>
                         </div>
                     </td>
-                    <td class="actions">
+                    <td class="actions" style="text-align: right">
                         <div class="wrapper">
-                            Descargar
+                            <button type="submit" class="btn btn-default" ng-click="download()">
+                                Descargar
+                            </button>
                         </div>
                     </td>
                 </tr>
@@ -87,6 +83,47 @@
         </div>
     </div>
 
+    <div class="modal fade" id="videoSpace" role="dialog">
+        <div class="modal-dialog">
+            <!-- Modal content-->
+            <div class="modal-content">
+
+                <div class="modal-header">
+                    <button type="button" class="close" data-dismiss="modal">&times;</button>
+                    <h4>Reproducción de video</h4>
+                    <span>Siniestro: #{{selectedVideo.siniestroId}}</span>
+                </div>
+
+                <div class="modal-body">
+
+                    <div class="blocker"></div>
+
+                    <div class="embed-responsive embed-responsive-16by9">
+                        <youtube-video video-id="videoId" player="player" player-vars="playerVars"></youtube-video>
+                    </div>
+
+                </div>
+
+                <div class="modal-footer" style="text-align: center">
+                    <button class="btn btn-default" ng-click="playVideo()">
+                        <span class="glyphicon glyphicon-play" aria-hidden="true"></span>
+                        Play
+                    </button>
+
+                    <button class="btn btn-default" ng-click="pauseVideo()">
+                        <span class="glyphicon glyphicon-pause" aria-hidden="true"></span>
+                        Pause
+                    </button>
+
+                    <button class="btn btn-default" ng-click="stopVideo()">
+                        <span class="glyphicon glyphicon-stop" aria-hidden="true"></span>
+                        Stop
+                    </button>
+                </div>
+
+            </div>
+        </div>
+    </div>
 
     <hr>
 

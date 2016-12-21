@@ -1,6 +1,6 @@
 angular.module('dashcam-repo.controllers.HomeController', [])
     .controller('HomeController',
-        function ($scope, $timeout, DBService) {
+        function ($scope, $timeout, $interval, DBService) {
 
             $scope.videos = [
                 {
@@ -37,17 +37,62 @@ angular.module('dashcam-repo.controllers.HomeController', [])
                 $timeout(function(){
                     $scope.searching = false;
                 }, 2000);
-
             };
 
             $scope.selectVideo = function (video) {
+                $scope.selectedVideo = video;
                 $scope.videoId = video.videoId;
+                $scope.playerVars = {
+                    controls: 0,
+                    autoplay: 1
+                };
+                $("#videoSpace").modal("show");
             };
 
             $scope.$on('youtube.player.ready', function ($event, player) {
-                player.playVideo();
+                console.log("------------------ ready");
+                $scope.player = player;
+                $scope.playVideo();
             });
 
+            $("#videoSpace").on('shown.bs.modal', function(){
+            });
+
+            $("#videoSpace").on('hidden.bs.modal', function(){
+                $scope.stopVideo();
+                $scope.selectedVideo = undefined;
+                $scope.videoId = undefined;
+            });
+
+            // Controles play / pause / stop
+
+            $interval(function(){
+                if($scope.player && $scope.videoId){
+                    var j = $scope.player.j;
+                    if(j.duration > 0 && j.currentTime >= j.duration - 2){
+                        $scope.pauseByTime = true;
+                        $scope.pauseVideo();
+                    }
+                }
+            }, 1000);
+
+            $scope.playVideo = function(){
+                if(!$scope.pauseByTime){
+                    console.log("------------------ play");
+                    $scope.player.playVideo();
+                }
+            };
+
+            $scope.pauseVideo = function(){
+                console.log("------------------ pause");
+                $scope.player.pauseVideo();
+            };
+
+            $scope.stopVideo = function(){
+                console.log("------------------ stop");
+                $scope.player.stopVideo();
+                $scope.pauseByTime = false;
+            };
         }
     )
 ;
