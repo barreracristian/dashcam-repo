@@ -4,37 +4,28 @@ angular.module('dashcam-repo.controllers.HomeController', [])
 
             $scope.videos = [
                 {
-                    siniestroId:2345,
-                    patente:"LFRG34",
-                    rut:"13.235.235-5",
-                    uploaded:true,
-                    seen:false,
-                    downloaded:false,
-                    videoId:"Q6Ms0SxEcT0"
+                    siniestroId: 2345,
+                    patente: "LFRG34",
+                    rut: "13.235.235-5",
+                    uploaded: true,
+                    seen: false,
+                    downloaded: false,
+                    videoId: "Q6Ms0SxEcT0"
                 },
                 {
-                    siniestroId:2345,
-                    patente:"LFRG34",
-                    rut:"13.235.235-5",
-                    uploaded:true,
-                    seen:true,
-                    downloaded:false,
-                    videoId:"KxUoTlKMVnM"
-                },
-                {
-                    siniestroId:2345,
-                    patente:"LFRG34",
-                    rut:"13.235.235-5",
-                    uploaded:true,
-                    seen:true,
-                    downloaded:true,
-                    videoId:""
+                    siniestroId: 2345,
+                    patente: "LFRG34",
+                    rut: "13.235.235-5",
+                    uploaded: true,
+                    seen: true,
+                    downloaded: false,
+                    videoId: "KxUoTlKMVnM"
                 }
             ];
 
-            $scope.search = function(){
+            $scope.search = function () {
                 $scope.searching = true;
-                $timeout(function(){
+                $timeout(function () {
                     $scope.searching = false;
                 }, 2000);
             };
@@ -55,10 +46,10 @@ angular.module('dashcam-repo.controllers.HomeController', [])
                 $scope.playVideo();
             });
 
-            $("#videoSpace").on('shown.bs.modal', function(){
+            $("#videoSpace").on('shown.bs.modal', function () {
             });
 
-            $("#videoSpace").on('hidden.bs.modal', function(){
+            $("#videoSpace").on('hidden.bs.modal', function () {
                 $scope.stopVideo();
                 $scope.selectedVideo = undefined;
                 $scope.videoId = undefined;
@@ -66,33 +57,40 @@ angular.module('dashcam-repo.controllers.HomeController', [])
 
             // Controles play / pause / stop
 
-            $interval(function(){
-                if($scope.player && $scope.videoId){
+            $interval(function () {
+                if ($scope.player && $scope.videoId) {
                     var j = $scope.player.j;
-                    if(j.duration > 0 && j.currentTime >= j.duration - 2){
+                    if (j.duration > 0 && j.currentTime >= j.duration - 2) {
                         $scope.pauseByTime = true;
                         $scope.pauseVideo();
                     }
                 }
             }, 1000);
 
-            $scope.playVideo = function(){
-                if(!$scope.pauseByTime){
+            $scope.playVideo = function () {
+                if (!$scope.pauseByTime) {
                     console.log("------------------ play");
                     $scope.player.playVideo();
                 }
             };
 
-            $scope.pauseVideo = function(){
+            $scope.pauseVideo = function () {
                 console.log("------------------ pause");
                 $scope.player.pauseVideo();
             };
 
-            $scope.stopVideo = function(){
+            $scope.stopVideo = function () {
                 console.log("------------------ stop");
                 $scope.player.stopVideo();
                 $scope.pauseByTime = false;
             };
+
+            // Download
+
+            $scope.download = function (video) {
+                $scope.download = {};
+                $scope.download[video.videoId] = 'ongoing';
+            }
         }
     )
 ;

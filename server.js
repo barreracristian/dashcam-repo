@@ -1,14 +1,16 @@
 // set up ======================================================================
 
-var express     = require('express');
-var app         = express(); 						// create our app w/ express
-var port        = process.env.PORT || 8080; 				// set the port
-var bodyParser  = require('body-parser');
-var cors        = require('cors');
-var _           = require('lodash');
-var Q           = require("q");
-var pg          = require('pg');
-                  require('moment/locale/es');
+var express = require('express');
+var app = express(); 						// create our app w/ express
+var port = process.env.PORT || 8080; 				// set the port
+var bodyParser = require('body-parser');
+var cors = require('cors');
+var _ = require('lodash');
+var Q = require("q");
+var pg = require('pg');
+var fs = require('fs');
+var ytdl = require('ytdl-core');
+require('moment/locale/es');
 
 // configuration ===============================================================
 
@@ -51,6 +53,26 @@ app.get('/api/products', function (req, res) {
             return res.json(results);
         });
     });
+});
+
+app.get('/api/download/:videoId', function (req, res) {
+    var videoId = req.params.videoId;
+    try {
+        res.setHeader("Content-disposition", "attachment; filename=download_" + videoId + ".mp4");
+        res.setHeader('Content-type', 'video/mpeg');
+
+        ytdl('http://www.youtube.com/watch?v=' + videoId)
+            .pipe(res);
+        //.pipe(fs.createWriteStream(videoId + '.flv'));
+
+    } catch (error) {
+        console.log("------------------ error in " + videoId + "  = " + JSON.stringify(error, null, 2));
+        res.status(500).json({success: false, data: error});
+    }
+
+    console.log("------------------ downloading DONE " + videoId);
+
+    //return res.json({});
 });
 
 // application -------------------------------------------------------------

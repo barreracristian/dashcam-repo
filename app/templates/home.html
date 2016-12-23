@@ -72,9 +72,10 @@
                     </td>
                     <td class="actions" style="text-align: right">
                         <div class="wrapper">
-                            <button type="submit" class="btn btn-default" ng-click="download()">
-                                Descargar
-                            </button>
+                            <a href="/api/download/{{v.videoId}}" ng-click="download(v)" ng-if="!download[v.videoId]" class="btn btn-default">Descargar</a>
+                            <span class="glyphicon glyphicon-repeat spinning" aria-hidden="true" ng-if="download[v.videoId] == 'ongoing'"></span>
+                            <span class="glyphicon glyphicon-ok" aria-hidden="true" ng-if="download[v.videoId] == 'ok'"></span>
+                            <span class="glyphicon glyphicon-remove" aria-hidden="true" ng-if="download[v.videoId] == 'bad'"></span>
                         </div>
                     </td>
                 </tr>
